@@ -1,0 +1,18 @@
+.input {
+  background-color: #545454;
+  margin-bottom: 25px;
+  border-radius: 15px;
+}
+
+.inputs {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.messageInput {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  flex-grow: 6;
+}

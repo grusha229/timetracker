@@ -1,7 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import "./Task.scss"
-import Button from "../../../components/button/Button";
+import Button from "../../../components/Button/Button";
 import Timer from "../../../components/Timer/Timer";
+import {iTaskProps} from "../TaskList";
 
 export interface Time {
     hours: number,
@@ -9,16 +10,13 @@ export interface Time {
     seconds: number
 }
 
-export interface iTaskProps {
-    status: boolean,
-    name: string,
-    description: string,
-    time?: Time
+interface iTaskInternal extends iTaskProps {
+    status?: "Done" | "Pause" | "InProgress",
 }
 
-const Task:React.FC<iTaskProps> = ({status,name,description,time}) => {
+const Task:React.FC<iTaskInternal> = ({name,description}) => {
 
-    const [Seconds, setSeconds] = useState(7190);
+    const [Seconds, setSeconds] = useState(0);
     const [isSecondsRun, setIsSecondsRun] = useState(false);
 
     useEffect(() => {
@@ -28,10 +26,9 @@ const Task:React.FC<iTaskProps> = ({status,name,description,time}) => {
             }
             const interval = setInterval(() => increaseTime(1), 1000);
 
-            const cleanup = () => {
+            return () => {
                 clearInterval(interval);
             };
-            return cleanup;
         }
     });
 
@@ -45,20 +42,23 @@ const Task:React.FC<iTaskProps> = ({status,name,description,time}) => {
 
     return (
         <div className={'task'}>
-            <div>
-                task status: {status ? "done" : "work in progress"}
+            <div className={`task_item__status ${isSecondsRun ? "active" : "paused"}`}>
+                <p>
+                    {isSecondsRun ? "В работе" : "Пауза"}
+                </p>
             </div>
-            <div>
-                task name: {name}
+            <div className={'task_item__info'}>
+                <div className={'task_item__info title'}>
+                    {name}
+                </div>
+                <div className={'task_item__info description'}>
+                    {description}
+                </div>
             </div>
-            <div>
-                task description: {description}
-            </div>
-            <div>
-                task time:
+            <div className={`task_item__time ${isSecondsRun ? "active" : "paused"}`}>
                 <Timer seconds={Seconds}/>
             </div>
-            <div>
+            <div className={'task_item__button'}>
                 <Button onClick={handleTimer} type={"submit"} >
                     {isSecondsRun ? "Пауза" : "Старт"}
                 </Button>
