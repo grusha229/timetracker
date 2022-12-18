@@ -14,7 +14,6 @@ const TaskList:React.FC<any> = () => {
                 name={'Название задачи'}
                 description={'Описание задачи'}
                 status={true}
-                time={1041241}
             />
         </div>
     )
