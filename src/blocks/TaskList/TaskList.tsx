@@ -1,39 +1,36 @@
 import React from 'react';
 import "./TaskList.scss"
-import Task, {Time} from "./Task/Task";
+import {useSelector, useStore, connect} from "react-redux"
+import {taskListSelector} from "../../redux/selectors";
+import {State} from "../../redux/reducer/rootReducer";
+import {Task as Tasktype} from "../../redux/reducer/types"
+import TaskItem from "./Task/TaskItem";
 
-
-export interface iTaskProps {
-    status?: "Done" | "Pause" | "InProgress",
-    name: string,
-    description: string,
-    time?: Time
-}
-
-interface iTasklistProps {
-    tasks: iTaskProps[]
-}
 
 const TaskList:React.FC<any> = () => {
+    const taskList = useSelector(taskListSelector)
 
     return (
         <>
             <div className={'tasklist'}>
-                <Task
-                    name={'Название задачи'}
-                    description={'Создано 17.12.22 в 10:01'}
+            {taskList.map((task: Tasktype)=> (
+                <TaskItem
+                    name={task.name}
+                    time={task.time}
+                    id={task.id}
                 />
-                <Task
-                    name={'Другая задача'}
-                    description={'Создано 05.12.22 в 13:23'}
-                />
-                <Task
-                    name={'Другая задача'}
-                    description={'Создано 01.12.22 в 23:41'}
-                />
+            ))
+            }
             </div>
         </>
     )
 }
 
-export default TaskList;
+const mapStateToProps = (state: State) => {
+    console.log(state)
+    return {
+        arrayOfTasks: state
+    }
+}
+
+export default connect(mapStateToProps,null)(TaskList);

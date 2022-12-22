@@ -2,19 +2,10 @@ import React, {useState,useEffect} from 'react';
 import "./Task.scss"
 import Button from "../../../components/Button/Button";
 import Timer from "../../../components/Timer/Timer";
-import {iTaskProps} from "../TaskList";
+import {Task as TaskType} from "../../../redux/reducer/types";
 
-export interface Time {
-    hours: number,
-    minutes: number,
-    seconds: number
-}
 
-interface iTaskInternal extends iTaskProps {
-    status?: "Done" | "Pause" | "InProgress",
-}
-
-const Task:React.FC<iTaskInternal> = ({name,description}) => {
+const TaskItem:React.FC<TaskType> = ({name, time}) => {
 
     const [Seconds, setSeconds] = useState(0);
     const [isSecondsRun, setIsSecondsRun] = useState(false);
@@ -39,7 +30,9 @@ const Task:React.FC<iTaskInternal> = ({name,description}) => {
         console.log(isSecondsRun)
     }
 
-
+    let date_parsed = new Date(time)
+    let hours = date_parsed.toLocaleTimeString()
+    let day = date_parsed.toLocaleDateString()
     return (
         <div className={'task'}>
             <div className={`task_item__status ${isSecondsRun ? "active" : "paused"}`}>
@@ -52,7 +45,7 @@ const Task:React.FC<iTaskInternal> = ({name,description}) => {
                     {name}
                 </div>
                 <div className={'task_item__info description'}>
-                    {description}
+                    {`Создано ${day} в ${hours}`}
                 </div>
             </div>
             <div className={`task_item__time ${isSecondsRun ? "active" : "paused"}`}>
@@ -67,4 +60,4 @@ const Task:React.FC<iTaskInternal> = ({name,description}) => {
     )
 }
 
-export default Task;
+export default TaskItem;
