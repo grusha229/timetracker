@@ -1,12 +1,12 @@
 export const createTask = (
     id: string,
     name: string,
-    time: string,
+    creationTime: string,
 ) => ({
     type: 'CREATE_TASK',
     id,
     name,
-    time,
+    creationTime,
 } as const);
 
 export const removeTask = (

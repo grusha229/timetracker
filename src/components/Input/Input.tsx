@@ -2,10 +2,10 @@ import React, {InputHTMLAttributes} from 'react';
 import s from './Input.module.css'
 
 export interface iInputProps extends InputHTMLAttributes<HTMLInputElement>{
-
+    ref?: any
 }
-
-const Input:React.FC<iInputProps> = ({placeholder,onChange}) => {
+s
+const Input:React.FC<iInputProps> = ({placeholder,onChange,onKeyUp,value,ref}) => {
     return (
         <>
             <div className={s.inputs}>
@@ -13,6 +13,9 @@ const Input:React.FC<iInputProps> = ({placeholder,onChange}) => {
                     className={s.messageInput}
                     placeholder={placeholder}
                     onChange={onChange}
+                    onKeyUp={onKeyUp}
+                    value={value}
+                    ref={ref}
                 />
             </div>
         </>

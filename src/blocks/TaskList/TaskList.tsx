@@ -16,8 +16,9 @@ const TaskList:React.FC<any> = () => {
             {taskList.map((task: Tasktype)=> (
                 <TaskItem
                     name={task.name}
-                    time={task.time}
+                    creationTime={task.creationTime}
                     id={task.id}
+                    key={task.id}
                 />
             ))
             }

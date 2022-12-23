@@ -8,7 +8,7 @@ import {createTask, removeTask} from "../../../redux/actions";
 import {useDispatch} from "react-redux";
 
 
-const TaskItem:React.FC<TaskType> = ({name, time, id}) => {
+const TaskItem:React.FC<TaskType> = ({name, creationTime, id}) => {
 
     const [Seconds, setSeconds] = useState(0);
     const [isSecondsRun, setIsSecondsRun] = useState(false);
@@ -39,9 +39,9 @@ const TaskItem:React.FC<TaskType> = ({name, time, id}) => {
         console.log(isSecondsRun)
     }
 
-    let date_parsed = new Date(time)
-    let hours = date_parsed.toLocaleTimeString()
-    let day = date_parsed.toLocaleDateString()
+    let creationDateParsed = new Date(creationTime)
+    let hours = creationDateParsed.toLocaleTimeString()
+    let day = creationDateParsed.toLocaleDateString()
     return (
         <div className={'task'}>
             <div className={`task_item__status ${isSecondsRun ? "active" : "paused"}`}>
