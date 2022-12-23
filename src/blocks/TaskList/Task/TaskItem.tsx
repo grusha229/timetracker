@@ -1,11 +1,14 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import "./Task.scss"
 import Button from "../../../components/Button/Button";
 import Timer from "../../../components/Timer/Timer";
 import {Task as TaskType} from "../../../redux/reducer/types";
+import trashIcon from "../../../assets/svg/trash.svg"
+import {createTask, removeTask} from "../../../redux/actions";
+import {useDispatch} from "react-redux";
 
 
-const TaskItem:React.FC<TaskType> = ({name, time}) => {
+const TaskItem:React.FC<TaskType> = ({name, time, id}) => {
 
     const [Seconds, setSeconds] = useState(0);
     const [isSecondsRun, setIsSecondsRun] = useState(false);
@@ -22,7 +25,13 @@ const TaskItem:React.FC<TaskType> = ({name, time}) => {
             };
         }
     });
+    const dispatch = useDispatch()
 
+    const deleteHandler = useCallback(() => {
+        if (confirm('Вы действительно хотите удалить запись?')) {
+            return dispatch(removeTask(id));
+        }
+    }, [dispatch]);
 
 
     function handleTimer () {
@@ -55,6 +64,9 @@ const TaskItem:React.FC<TaskType> = ({name, time}) => {
                 <Button onClick={handleTimer} type={"submit"} >
                     {isSecondsRun ? "Пауза" : "Старт"}
                 </Button>
+            </div>
+            <div className={'task_item__delete'} onClick={deleteHandler}>
+                <img src={trashIcon}/>
             </div>
         </div>
     )

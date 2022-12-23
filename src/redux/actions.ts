@@ -11,13 +11,9 @@ export const createTask = (
 
 export const removeTask = (
     id: string,
-    name: string,
-    time: Date,
 ) => ({
     type: 'REMOVE_TASK',
     id,
-    name,
-    time,
 } as const);
 
 const actions = {

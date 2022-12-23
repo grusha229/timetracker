@@ -5,6 +5,7 @@ import {Task, TaskId} from "./types";
 const initialState = [{
     name: "lalala",
     time: "Fri Dec 23 2022 00:50:54 GMT+0300 (GMT+03:00)",
+    id: "123456789"
 }] as Task[];
 
 export type State = typeof initialState;
@@ -20,8 +21,10 @@ const taskReducer = (state: State = initialState, action: Actions) => {
                     time: action.time
                 }
             ];
-        // case 'REMOVE_TASK':
-        //     return state;
+        case 'REMOVE_TASK':
+            return state.filter((Task) => {
+                return (Task.id != action.id)
+            })
         default:
             return state;
     }

@@ -4,12 +4,13 @@ import './AddTask.scss'
 import Button from "../../components/Button/Button";
 import {useDispatch} from "react-redux";
 import {createTask} from "./../../redux/actions"
+// @ts-ignore
 import { v4 as createId } from "uuid";
 
 export const AddTask = () => {
 
     const nameRef = useRef("");
-    const changeName = useCallback((event) => (nameRef.current = event.target.value), []);
+    const changeName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => (nameRef.current = event.target.value), []);
     const dispatch = useDispatch()
 
     const submit = useCallback(() => {

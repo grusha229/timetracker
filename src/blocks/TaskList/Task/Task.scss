@@ -45,6 +45,19 @@
       margin-left: 15px;
     }
 
+    &__delete {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 15px;
+      opacity: .5;
+      cursor: pointer;
+
+      img {
+        width: 30px;
+      }
+    }
+
     &__time {
       display: flex;
       align-self: center;
