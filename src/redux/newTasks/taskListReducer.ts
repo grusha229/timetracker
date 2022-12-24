@@ -44,7 +44,6 @@ export const taskListReducer = (state: State = initialState, action: Actions) =>
             }, {});
 
         case "START_TIMER":
-            return () => {
                 let startTime = new Date().toString()
                 let periods = state[action.id].workPeriods
 
@@ -63,15 +62,13 @@ export const taskListReducer = (state: State = initialState, action: Actions) =>
                         workPeriods: periods
                     }
                 };
-            }
 
         case "STOP_TIMER":
-            return () => {
                 let endTime = new Date().toString()
-                let periods = state[action.id].workPeriods
+                let period = state[action.id].workPeriods
 
-                periods[periods.length - 1] = {
-                    ...periods[periods.length - 1],
+                period[period.length - 1] = {
+                    ...period[period.length - 1],
                     end: endTime,
                 }
                 return {
@@ -79,10 +76,9 @@ export const taskListReducer = (state: State = initialState, action: Actions) =>
                     [action.id]: {
                         ...state[action.id],
                         isInProgress: false,
-                        workPeriods: periods
+                        workPeriods: period
                     }
                 };
-            }
 
         default:
             return state;
