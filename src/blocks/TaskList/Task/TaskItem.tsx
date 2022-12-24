@@ -2,16 +2,16 @@ import React, {useState, useEffect, useCallback} from 'react';
 import "./Task.scss"
 import Button from "../../../components/Button/Button";
 import Timer from "../../../components/Timer/Timer";
-import {Task as TaskType} from "../../../redux/reducer/types";
+import {Task as TaskType} from "../../../redux/types";
 import trashIcon from "../../../assets/svg/trash.svg"
-import {createTask, removeTask} from "../../../redux/actions";
-import {useDispatch} from "react-redux";
+import {removeTask, stopNewTimePeriod, startNewTimePeriod} from "../../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {taskListSelector} from "../../../redux/selectors";
 
 
-const TaskItem:React.FC<TaskType> = ({name, creationTime, id}) => {
-
+const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPeriods}) => {
     const [Seconds, setSeconds] = useState(0);
-    const [isSecondsRun, setIsSecondsRun] = useState(false);
+    const [isSecondsRun, setIsSecondsRun] = useState(isInProgress);
 
     useEffect(() => {
         if (isSecondsRun) {
@@ -34,14 +34,18 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id}) => {
     }, [dispatch]);
 
 
-    function handleTimer () {
+    const handleTimer = useCallback(() => {
         setIsSecondsRun(!isSecondsRun)
-        console.log(isSecondsRun)
-    }
+        if (isSecondsRun) {
+            dispatch((stopNewTimePeriod(id)))
+        } else dispatch((startNewTimePeriod(id)));
+    }, [dispatch,isSecondsRun]);
+
 
     let creationDateParsed = new Date(creationTime)
     let hours = creationDateParsed.toLocaleTimeString()
     let day = creationDateParsed.toLocaleDateString()
+
     return (
         <div className={'task'}>
             <div className={`task_item__status ${isSecondsRun ? "active" : "paused"}`}>
@@ -61,7 +65,7 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id}) => {
                 <Timer seconds={Seconds}/>
             </div>
             <div className={'task_item__button'}>
-                <Button onClick={handleTimer} type={"submit"} >
+                <Button onClick={isSecondsRun ? handleTimer : handleTimer} type={"submit"} >
                     {isSecondsRun ? "Пауза" : "Старт"}
                 </Button>
             </div>

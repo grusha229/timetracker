@@ -3,7 +3,7 @@ import Input from "../../components/Input/Input";
 import './AddTask.scss'
 import Button from "../../components/Button/Button";
 import {useDispatch} from "react-redux";
-import {createTask} from "./../../redux/actions"
+import {createTask} from "../../redux/actions"
 // @ts-ignore
 import { v4 as createId } from "uuid";
 

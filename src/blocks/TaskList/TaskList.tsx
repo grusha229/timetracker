@@ -2,9 +2,10 @@ import React from 'react';
 import "./TaskList.scss"
 import {useSelector, useStore, connect} from "react-redux"
 import {taskListSelector} from "../../redux/selectors";
-import {State} from "../../redux/reducer/rootReducer";
-import {Task as Tasktype} from "../../redux/reducer/types"
+import {State} from "../../redux/newTasks/taskListReducer";
+import {Task as Tasktype} from "../../redux/types"
 import TaskItem from "./Task/TaskItem";
+import taskItem from "./Task/TaskItem";
 
 
 const TaskList:React.FC<any> = () => {
@@ -13,14 +14,25 @@ const TaskList:React.FC<any> = () => {
     return (
         <>
             <div className={'tasklist'}>
-            {taskList.map((task: Tasktype)=> (
-                <TaskItem
-                    name={task.name}
-                    creationTime={task.creationTime}
-                    id={task.id}
-                    key={task.id}
-                />
-            ))
+            {(Object.keys(taskList) as Array<any>).map((key)=>{
+                // todo – Разобраться с типизацией
+                return(
+                    <TaskItem
+                        // @ts-ignore
+                        name={taskList[key].name}
+                        // @ts-ignore
+                        creationTime={taskList[key].creationTime}
+                        // @ts-ignore
+                        id={taskList[key].id}
+                        // @ts-ignore
+                        key={taskList[key].id}
+                        // @ts-ignore
+                        isInProgress={taskList[key].isInProgress}
+                        // @ts-ignore
+                        workPeriods={taskList[key].workPeriods}
+                    />
+                )
+            })
             }
             </div>
         </>

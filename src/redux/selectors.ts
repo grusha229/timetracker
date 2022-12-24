@@ -1,3 +1,3 @@
-import { State } from "./reducer/types";
+import { State } from "./types";
 
-export const taskListSelector = (state: State) => state.tasks;
+export const taskListSelector = (state: State) => state.taskListReducer;
