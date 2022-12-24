@@ -2,19 +2,45 @@
   padding: 15px 25px;
   background: #545454;
   border-radius: 15px;
-  display: flex;
   margin-bottom: 15px;
+
+  &_info {
+    display:flex;
+    width: 100%;
+  }
+
+  .additional {
+    margin-top: 35px;
+    flex-direction: column;
+
+    li {
+      list-style-type: none;
+      margin-top: 15px;
+    }
+  }
+
+  .hide {
+    display: none;
+  }
 
   &_item{
     align-self: center;
+
+    &__more {
+      margin-left: auto;
+      margin-right: 15px;
+      align-self: center;
+      text-decoration: underline;
+      opacity: .6;
+      cursor: pointer;
+    }
 
     &__info {
       max-width: 500px;
       min-width: 400px;
       display: flex;
       flex-direction: column;
-      align-self: center;
-      margin-right: auto;
+      margin-right: 15px;
 
       .title{
         font-weight: 600;
@@ -35,6 +61,7 @@
       justify-content: center;
       min-width: 70px;
       margin-right: 15px;
+      align-self: center;
 
       &.active {
         background: #5fb71a;

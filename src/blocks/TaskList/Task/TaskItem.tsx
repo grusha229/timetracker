@@ -10,6 +10,7 @@ import {useDispatch} from "react-redux";
 const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPeriods}) => {
     const [Seconds, setSeconds] = useState(0);
     const [isSecondsRun, setIsSecondsRun] = useState(isInProgress);
+    const [isDetailed, setIsDetaild] = useState(false)
 
     useEffect(() => {
         if (isSecondsRun) {
@@ -31,6 +32,10 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
         }
     }, [dispatch]);
 
+    const moreButtonHandler = useCallback(() => {
+        setIsDetaild(!isDetailed)
+    }, [isDetailed])
+
 
     const handleTimer = useCallback(() => {
         setIsSecondsRun(!isSecondsRun)
@@ -46,29 +51,58 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
 
     return (
         <div className={'task'}>
-            <div className={`task_item__status ${isSecondsRun ? "active" : "paused"}`}>
-                <p>
-                    {isSecondsRun ? "В работе" : "Пауза"}
-                </p>
-            </div>
-            <div className={'task_item__info'}>
-                <div className={'task_item__info title'}>
-                    {name}
+            <div className={'task_info'}>
+                <div className={`task_item__status ${isSecondsRun ? "active" : "paused"}`}>
+                    <p>
+                        {isSecondsRun ? "В работе" : "Пауза"}
+                    </p>
                 </div>
-                <div className={'task_item__info description'}>
-                    {`Создано ${day} в ${hours}`}
+                <div className={'task_item__info'}>
+                    <div className={'task_item__info title'}>
+                        {name}
+                    </div>
+                    <div className={'task_item__info description'}>
+                        {`Создано ${day} в ${hours}`}
+                    </div>
+                </div>
+                <div className={'task_item__more'} onClick={moreButtonHandler}>
+                    Подробнее
+                </div>
+                <div className={`task_item__time ${isSecondsRun ? "active" : "paused"}`}>
+                    <Timer seconds={Seconds}/>
+                </div>
+                <div className={'task_item__button'}>
+                    <Button onClick={isSecondsRun ? handleTimer : handleTimer} type={"submit"} >
+                        {isSecondsRun ? "Пауза" : "Старт"}
+                    </Button>
+                </div>
+                <div className={'task_item__delete'} onClick={deleteHandler}>
+                    <img src={trashIcon}/>
                 </div>
             </div>
-            <div className={`task_item__time ${isSecondsRun ? "active" : "paused"}`}>
-                <Timer seconds={Seconds}/>
-            </div>
-            <div className={'task_item__button'}>
-                <Button onClick={isSecondsRun ? handleTimer : handleTimer} type={"submit"} >
-                    {isSecondsRun ? "Пауза" : "Старт"}
-                </Button>
-            </div>
-            <div className={'task_item__delete'} onClick={deleteHandler}>
-                <img src={trashIcon}/>
+            <div className={`task_info additional ${isDetailed ? "" : "hide"}`}>
+                    Подробная информация
+                {workPeriods.map((el) => {
+                    let dateStart = new Date(el.start);
+                    let dateStartString = `Начало: ${dateStart.toLocaleTimeString()} ${dateStart.toLocaleDateString()}`
+                    let dateStop;
+                    let dateStopString = "";
+                    if (el.end){
+                        dateStop = new Date(el.end);
+                        dateStopString = `Конец: ${dateStop.toLocaleTimeString()} ${dateStart.toLocaleDateString()}`;
+                    } else {
+                        dateStopString = "In progress"
+                    }
+
+                    return (
+                        <li>
+                            <div>{dateStartString}</div>
+                            <div>{dateStopString}</div>
+                        </li>
+                    )
+                })
+                }
+
             </div>
         </div>
     )
