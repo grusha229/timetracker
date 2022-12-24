@@ -1,5 +1,5 @@
 import {Actions} from "./../actions";
-import {Task,TaskId} from "../types";
+import {Task} from "../types";
 
 // const initialState = [] as Task[];
 // const initialState = [{

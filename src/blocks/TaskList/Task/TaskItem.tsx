@@ -5,9 +5,7 @@ import Timer from "../../../components/Timer/Timer";
 import {Task as TaskType} from "../../../redux/types";
 import trashIcon from "../../../assets/svg/trash.svg"
 import {removeTask, stopNewTimePeriod, startNewTimePeriod} from "../../../redux/actions";
-import {useDispatch, useSelector} from "react-redux";
-import {taskListSelector} from "../../../redux/selectors";
-
+import {useDispatch} from "react-redux";
 
 const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPeriods}) => {
     const [Seconds, setSeconds] = useState(0);

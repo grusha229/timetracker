@@ -1,5 +1,4 @@
 import React from 'react';
-
 export interface iTimer {
     seconds: number
 }
