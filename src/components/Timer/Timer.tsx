@@ -1,7 +1,4 @@
-import React, {ButtonHTMLAttributes} from 'react';
-import styles from './Button.module.css';
-import {Time} from "../../blocks/TaskList/Task/TaskItem";
-
+import React from 'react';
 export interface iTimer {
     seconds: number
 }
