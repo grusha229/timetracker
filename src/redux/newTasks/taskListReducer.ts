@@ -1,41 +1,35 @@
 import {Actions} from "./../actions";
 import {Task} from "../types";
 
-// const initialState = [] as Task[];
-// const initialState = [{
-//     id:'21321321',
-//     name:"fsdafdas",
-//     isInProgress: false,
-//     creationTime: "Sat Dec 24 2022 00:32:25 GMT+0300 (GMT+03:00)",
-//     workPeriods: [{start: '',end: ""}]
-// }] as Task[];
+// const initialState = {
+//         '123456789': {
+//             id: '123456789',
+//             name: '123456789',
+//             creationTime: '',
+//             workPeriods: [
+//                 {
+//                     start: 'Sat Dec 21 2022 12:19:29 GMT+0300 (GMT+03:00)',
+//                     end: 'Sat Dec 21 2022 13:25:31 GMT+0300 (GMT+03:00)'
+//                 },
+//                 {
+//                     start: 'Sat Dec 21 2022 14:19:33 GMT+0300 (GMT+03:00)',
+//                     end: 'Sat Dec 21 2022 16:19:34 GMT+0300 (GMT+03:00)'
+//                 },
+//                 {
+//                     start: 'Sat Dec 22 2022 16:24:34 GMT+0300 (GMT+03:00)',
+//                     end: 'Sat Dec 22 2022 16:24:38 GMT+0300 (GMT+03:00)'
+//                 },
+//                 {
+//                     start: 'Sat Dec 22 2022 17:24:39 GMT+0300 (GMT+03:00)',
+//                     end: 'Sat Dec 22 2022 20:24:41 GMT+0300 (GMT+03:00)'
+//                 }
+//             ],
+//             isInProgress: false
+//         }
+// } as Record<string, Task>
 
-const initialState = {
-        '123456789': {
-            id: '123456789',
-            name: '123456789',
-            creationTime: '',
-            workPeriods: [
-                {
-                    start: 'Sat Dec 21 2022 12:19:29 GMT+0300 (GMT+03:00)',
-                    end: 'Sat Dec 21 2022 13:25:31 GMT+0300 (GMT+03:00)'
-                },
-                {
-                    start: 'Sat Dec 21 2022 14:19:33 GMT+0300 (GMT+03:00)',
-                    end: 'Sat Dec 21 2022 16:19:34 GMT+0300 (GMT+03:00)'
-                },
-                {
-                    start: 'Sat Dec 22 2022 16:24:34 GMT+0300 (GMT+03:00)',
-                    end: 'Sat Dec 22 2022 16:24:38 GMT+0300 (GMT+03:00)'
-                },
-                {
-                    start: 'Sat Dec 22 2022 17:24:39 GMT+0300 (GMT+03:00)',
-                    end: 'Sat Dec 22 2022 20:24:41 GMT+0300 (GMT+03:00)'
-                }
-            ],
-            isInProgress: false
-        }
-} as Record<string, Task>
+const initialState = {} as Record<string, Task>
+
 
 export type State = typeof initialState;
 
