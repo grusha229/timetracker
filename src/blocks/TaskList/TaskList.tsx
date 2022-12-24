@@ -3,10 +3,7 @@ import "./TaskList.scss"
 import {useSelector, useStore, connect} from "react-redux"
 import {taskListSelector} from "../../redux/selectors";
 import {State} from "../../redux/newTasks/taskListReducer";
-import {Task as Tasktype} from "../../redux/types"
 import TaskItem from "./Task/TaskItem";
-import taskItem from "./Task/TaskItem";
-
 
 const TaskList:React.FC<any> = () => {
     const taskList = useSelector(taskListSelector)
