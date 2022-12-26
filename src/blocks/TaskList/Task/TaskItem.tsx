@@ -80,8 +80,32 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
                     <img src={trashIcon}/>
                 </div>
             </div>
+            {/*<div className={`task_info additional ${isDetailed ? "" : "hide"}`}>*/}
+            {/*        Подробная информация*/}
+            {/*    {workPeriods.map((el) => {*/}
+            {/*        let dateStart = new Date(el.start);*/}
+            {/*        let dateStartString = `Начало: ${dateStart.toLocaleTimeString()} ${dateStart.toLocaleDateString()}`*/}
+            {/*        let dateStop;*/}
+            {/*        let dateStopString = "";*/}
+            {/*        if (el.end){*/}
+            {/*            dateStop = new Date(el.end);*/}
+            {/*            dateStopString = `Конец: ${dateStop.toLocaleTimeString()} ${dateStart.toLocaleDateString()}`;*/}
+            {/*        } else {*/}
+            {/*            dateStopString = "In progress"*/}
+            {/*        }*/}
+
+            {/*        return (*/}
+            {/*            <li>*/}
+            {/*                <div>{dateStartString}</div>*/}
+            {/*                <div>{dateStopString}</div>*/}
+            {/*            </li>*/}
+            {/*        )*/}
+            {/*    })*/}
+            {/*    }*/}
+
+            {/*</div>*/}
             <div className={`task_info additional ${isDetailed ? "" : "hide"}`}>
-                    Подробная информация
+                Подробная информация
                 {workPeriods.map((el) => {
                     let dateStart = new Date(el.start);
                     let dateStartString = `Начало: ${dateStart.toLocaleTimeString()} ${dateStart.toLocaleDateString()}`
@@ -102,8 +126,8 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
                     )
                 })
                 }
-
             </div>
+
         </div>
     )
 }
