@@ -1,14 +1,29 @@
+import React, {useState} from "react";
+import {TimePeriod} from "../../redux/types";
 
-type TimeInterval = {
-    start: string,
-    end: string,
+interface Timetable {
+    workTimes: TimePeriod[],
+    containerWidth: number
 }
 
-type WorkTimes = TimeInterval[]
+function timelineWidth(day_start:number, day_end:number, containerWidth: number) : number {
+    return (((day_end - day_start))/(60*60*1000))*containerWidth/24;
+};
 
-export const Timetable = () => {
-    let numbers = [1,2,3,4,5,6];
-    let colors = ["red","blue","green","yellow","black","white"];
+function timeline_start_x(day_start:number, containerWidth: number) : number {
+    let date_start = new Date(day_start);
+    let date = new Date(date_start.getFullYear(),date_start.getMonth(),date_start.getDate());
+
+    let time_diff = date_start.getTime() - date.getTime()
+
+    return (time_diff/(60*60*1000))*containerWidth/24;
+};
+
+// @ts-ignore
+export const Timetable:React.FC<Timetable> = ({workTimes,containerWidth }) => {
+
+    let current: TimePeriod[] = []
+
     let allHours = [];
     for (let i = 0; i <= 24; i++) {
         allHours.push(i);
@@ -16,10 +31,41 @@ export const Timetable = () => {
     let currentPosition = 0;
     let initialPosition = 0;
     let dashWidth = 2
-    let diagramWidth = 1280
+    let diagramWidth = containerWidth
     let diagramHeight = 50
     let dashHeight = 4
     let lineHeight = 2
+
+    var dateParsed, dateParsed2, dailyTimeStart, dailyTimeEnd
+    let hours,hours2, minutes,minutes2, seconds,seconds2, day
+
+    if (!workTimes)
+        return
+    workTimes.forEach((el)=>{
+        if (el.end) {
+            dateParsed = new Date(el.start)
+            hours = dateParsed.getHours()
+            minutes = dateParsed.getMinutes()
+            seconds = dateParsed.getSeconds()
+            dailyTimeStart = dateParsed.getTime() - seconds - minutes*60 - hours*3600
+
+            dateParsed2 = new Date(el.end)
+            hours2 = dateParsed2.getHours()
+            minutes2 = dateParsed2.getMinutes()
+            seconds2 = dateParsed2.getSeconds()
+            dailyTimeEnd = dateParsed2.getTime() - seconds2 - minutes2*60 - hours2*3600
+            console.log(dailyTimeEnd,dailyTimeStart)
+
+            current.push(
+                {
+                    "start": dailyTimeStart,
+                    "end": dailyTimeEnd
+                }
+            )
+        }
+
+    })
+
 
 
     return (
@@ -27,18 +73,21 @@ export const Timetable = () => {
             <svg className={'timeline'} width={diagramWidth} height={diagramHeight} viewBox={`0 0 ${diagramWidth} ${diagramHeight}`}>
                 {
                     allHours.map((_el,index) => {
-                        currentPosition = initialPosition + index * 1280 / 24 - index*dashWidth/24;
+                        currentPosition = initialPosition + index * (containerWidth-50) / 24 - index*dashWidth/24;
                         return (
                             <rect fill={"#fff"} width={dashWidth} height={dashHeight} y={diagramHeight-dashHeight*1.5} x={currentPosition}></rect>
                         )
                     })
                 }
-                {/*{*/}
-                {/*    numbers.map((el,index)=> (*/}
-                {/*        <rect className={"unit"} fill={colors[index]} width={"100px"} height={"20px"} y={index*100}></rect>*/}
-                {/*    ))*/}
-                {/*}*/}
-                <rect className={"unit"} fill={"#fff"} width={"1280px"} height={lineHeight} y={diagramHeight-lineHeight}></rect>
+                {
+                    current.map((el,index)=> {
+                        // <rect fill={"#f2f2f2"} height={"20px"} width={"100px"}></rect>
+                        return ((el.end) &&
+                        <rect className={"unit"} fill={"#ffdd2d"} width={timelineWidth(el.start,el.end,containerWidth)} height={"20px"} x={timeline_start_x(el.start,containerWidth)}></rect>
+                        )
+                })
+                }
+                <rect className={"unit"} fill={"#fff"} width={containerWidth-50} height={lineHeight} y={diagramHeight-lineHeight}></rect>
             </svg>
         </div>
     );

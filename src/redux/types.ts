@@ -2,15 +2,15 @@ import type {reducer} from "./rootReducer";
 
 export type TaskId = string;
 
-type TimePeriod = {
-    start: string;
-    end: string | null;
+export type TimePeriod = {
+    start: number;
+    end: number | null;
 }
 
 export type Task = {
     id: TaskId;
     name: string;
-    creationTime: string;
+    creationTime: number;
     workPeriods: TimePeriod[];
     isInProgress: boolean;
 };

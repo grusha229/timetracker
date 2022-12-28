@@ -6,6 +6,7 @@ import {Task as TaskType} from "../../../redux/types";
 import trashIcon from "../../../assets/svg/trash.svg"
 import {removeTask, stopNewTimePeriod, startNewTimePeriod} from "../../../redux/actions";
 import {useDispatch} from "react-redux";
+import {Timetable} from "../../../components/Timetable/Timetable";
 
 const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPeriods}) => {
     const [Seconds, setSeconds] = useState(0);
@@ -49,6 +50,7 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
     let hours = creationDateParsed.toLocaleTimeString()
     let day = creationDateParsed.toLocaleDateString()
 
+    // @ts-ignore
     return (
         <div className={'task'}>
             <div className={'task_info'}>
@@ -80,52 +82,9 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
                     <img src={trashIcon}/>
                 </div>
             </div>
-            {/*<div className={`task_info additional ${isDetailed ? "" : "hide"}`}>*/}
-            {/*        Подробная информация*/}
-            {/*    {workPeriods.map((el) => {*/}
-            {/*        let dateStart = new Date(el.start);*/}
-            {/*        let dateStartString = `Начало: ${dateStart.toLocaleTimeString()} ${dateStart.toLocaleDateString()}`*/}
-            {/*        let dateStop;*/}
-            {/*        let dateStopString = "";*/}
-            {/*        if (el.end){*/}
-            {/*            dateStop = new Date(el.end);*/}
-            {/*            dateStopString = `Конец: ${dateStop.toLocaleTimeString()} ${dateStart.toLocaleDateString()}`;*/}
-            {/*        } else {*/}
-            {/*            dateStopString = "In progress"*/}
-            {/*        }*/}
-
-            {/*        return (*/}
-            {/*            <li>*/}
-            {/*                <div>{dateStartString}</div>*/}
-            {/*                <div>{dateStopString}</div>*/}
-            {/*            </li>*/}
-            {/*        )*/}
-            {/*    })*/}
-            {/*    }*/}
-
-            {/*</div>*/}
             <div className={`task_info additional ${isDetailed ? "" : "hide"}`}>
                 Подробная информация
-                {workPeriods.map((el) => {
-                    let dateStart = new Date(el.start);
-                    let dateStartString = `Начало: ${dateStart.toLocaleTimeString()} ${dateStart.toLocaleDateString()}`
-                    let dateStop;
-                    let dateStopString = "";
-                    if (el.end){
-                        dateStop = new Date(el.end);
-                        dateStopString = `Конец: ${dateStop.toLocaleTimeString()} ${dateStart.toLocaleDateString()}`;
-                    } else {
-                        dateStopString = "In progress"
-                    }
-
-                    return (
-                        <li>
-                            <div>{dateStartString}</div>
-                            <div>{dateStopString}</div>
-                        </li>
-                    )
-                })
-                }
+                <Timetable workTimes={workPeriods} containerWidth={1280}/>
             </div>
 
         </div>

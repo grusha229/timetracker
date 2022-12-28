@@ -5,23 +5,23 @@ import {Task} from "../types";
 //         '123456789': {
 //             id: '123456789',
 //             name: '123456789',
-//             creationTime: '',
+//             creationTime: 1671614369000,
 //             workPeriods: [
 //                 {
-//                     start: 'Sat Dec 21 2022 12:19:29 GMT+0300 (GMT+03:00)',
-//                     end: 'Sat Dec 21 2022 13:25:31 GMT+0300 (GMT+03:00)'
+//                     start: 1671614369000,
+//                     end: 1671618331000
 //                 },
 //                 {
-//                     start: 'Sat Dec 21 2022 14:19:33 GMT+0300 (GMT+03:00)',
-//                     end: 'Sat Dec 21 2022 16:19:34 GMT+0300 (GMT+03:00)'
+//                     start: 1671621573000,
+//                     end: 1671628774000
 //                 },
 //                 {
-//                     start: 'Sat Dec 22 2022 16:24:34 GMT+0300 (GMT+03:00)',
-//                     end: 'Sat Dec 22 2022 16:24:38 GMT+0300 (GMT+03:00)'
+//                     start: 1671715474000,
+//                     end: 1671715478000
 //                 },
 //                 {
-//                     start: 'Sat Dec 22 2022 17:24:39 GMT+0300 (GMT+03:00)',
-//                     end: 'Sat Dec 22 2022 20:24:41 GMT+0300 (GMT+03:00)'
+//                     start: 1671719079000,
+//                     end: 1671729881000
 //                 }
 //             ],
 //             isInProgress: false
@@ -55,7 +55,7 @@ export const taskListReducer = (state: State = initialState, action: Actions) =>
             }, {});
 
         case "START_TIMER":
-                let startTime = new Date().toString()
+                let startTime = new Date().getTime()
                 let periods = state[action.id].workPeriods
 
                 periods.push({
@@ -75,7 +75,7 @@ export const taskListReducer = (state: State = initialState, action: Actions) =>
                 };
 
         case "STOP_TIMER":
-                let endTime = new Date().toString()
+                let endTime = new Date().getTime()
                 let period = state[action.id].workPeriods
 
                 period[period.length - 1] = {
