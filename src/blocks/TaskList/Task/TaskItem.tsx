@@ -2,14 +2,27 @@ import React, {useState, useEffect, useCallback} from 'react';
 import "./Task.scss"
 import Button from "../../../components/Button/Button";
 import Timer from "../../../components/Timer/Timer";
-import {Task as TaskType} from "../../../redux/types";
+import {Task as TaskType, TimePeriod} from "../../../redux/types";
 import trashIcon from "../../../assets/svg/trash.svg"
 import {removeTask, stopNewTimePeriod, startNewTimePeriod} from "../../../redux/actions";
 import {useDispatch} from "react-redux";
 import {Timetable} from "../../../components/Timetable/Timetable";
 
+function getSecondsFromPeriods(workPeriods:TimePeriod[]) :number {
+    let accumulator = 0
+    workPeriods.forEach((el,index)=>{
+        if (el.end) {
+            accumulator += (el.end - el.start)
+        }
+    })
+    return Math.trunc(accumulator/1000)
+}
+
 const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPeriods}) => {
-    const [Seconds, setSeconds] = useState(0);
+
+
+
+    const [Seconds, setSeconds] = useState(getSecondsFromPeriods(workPeriods));
     const [isSecondsRun, setIsSecondsRun] = useState(isInProgress);
     const [isDetailed, setIsDetaild] = useState(false)
 
