@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {TimePeriod} from "../../redux/types";
+import "./Timetable.scss"
 
 interface Timetable {
     workTimes: TimePeriod[],
@@ -31,7 +32,7 @@ export const Timetable:React.FC<Timetable> = ({workTimes,containerWidth }) => {
     let currentPosition = 0;
     let initialPosition = 0;
     let dashWidth = 2
-    let diagramWidth = containerWidth
+    let diagramWidth = containerWidth - 50
     let diagramHeight = 50
     let dashHeight = 4
     let lineHeight = 2
@@ -73,7 +74,7 @@ export const Timetable:React.FC<Timetable> = ({workTimes,containerWidth }) => {
             <svg className={'timeline'} width={diagramWidth} height={diagramHeight} viewBox={`0 0 ${diagramWidth} ${diagramHeight}`}>
                 {
                     allHours.map((_el,index) => {
-                        currentPosition = initialPosition + index * (containerWidth-50) / 24 - index*dashWidth/24;
+                        currentPosition = initialPosition + index * (diagramWidth) / 24 - index*dashWidth/24;
                         return (
                             <rect fill={"#fff"} width={dashWidth} height={dashHeight} y={diagramHeight-dashHeight*1.5} x={currentPosition}></rect>
                         )
@@ -83,12 +84,23 @@ export const Timetable:React.FC<Timetable> = ({workTimes,containerWidth }) => {
                     current.map((el,index)=> {
                         // <rect fill={"#f2f2f2"} height={"20px"} width={"100px"}></rect>
                         return ((el.end) &&
-                        <rect className={"unit"} fill={"#ffdd2d"} width={timelineWidth(el.start,el.end,containerWidth)} height={"20px"} x={timeline_start_x(el.start,containerWidth)}></rect>
+                        <rect className={"unit"} fill={"#ffdd2d"} width={timelineWidth(el.start,el.end,diagramWidth)} height={"20px"} x={timeline_start_x(el.start,diagramWidth)}></rect>
                         )
                 })
                 }
-                <rect className={"unit"} fill={"#fff"} width={containerWidth-50} height={lineHeight} y={diagramHeight-lineHeight}></rect>
+                <rect className={"unit"} fill={"#fff"} width={diagramWidth} height={lineHeight} y={diagramHeight-lineHeight}></rect>
             </svg>
+            <div className={'times'}>
+                {
+                    allHours.map((_el,index) => {
+                        return (
+                            <div className={'hour'}>
+                                <div>{index.toString().padStart(2,'0')}</div>
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     );
 }

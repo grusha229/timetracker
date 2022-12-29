@@ -49,7 +49,7 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
     let creationDateParsed = new Date(creationTime)
     let hours = creationDateParsed.toLocaleTimeString()
     let day = creationDateParsed.toLocaleDateString()
-
+    console.log(workPeriods)
     // @ts-ignore
     return (
         <div className={'task'}>
@@ -83,7 +83,7 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
                 </div>
             </div>
             <div className={`task_info additional ${isDetailed ? "" : "hide"}`}>
-                Подробная информация
+                <div className={'title'}> { (workPeriods.length != 0) ? "Таймлайн задачи" : "Нет информации о работах"} </div>
                 <Timetable workTimes={workPeriods} containerWidth={1280}/>
             </div>
 

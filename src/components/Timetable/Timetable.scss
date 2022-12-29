@@ -1,0 +1,11 @@
+.times {
+  display: flex;
+  margin-left: -25px;
+  margin-right: -25px;
+}
+.hour {
+  flex: auto;
+  justify-content: center;
+  display: flex;
+  opacity: .7;
+}
