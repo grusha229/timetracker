@@ -18,10 +18,14 @@ export const AddTask = () => {
     const changeName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setTaskName(event.target.value)
     }, [taskName]);
+
     const dispatch = useDispatch()
 
 
     const submit = useCallback(() => {
+        if (!taskName) {
+            return;
+        }
         let time = new Date().toString()
         dispatch(createTask(createId(),taskName,time));
         setTaskName('')
