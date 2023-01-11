@@ -9,7 +9,8 @@ import {
 import {Provider} from "react-redux"
 import store from "./redux/store";
 import TaskListPage from "./pages/TaskListPage";
-import TimelinePage from "./pages/TimelinePage";
+// @ts-ignore
+import FormPage from "./pages/AuthPage/AuthPage.jsx";
 import ErrorPage from "./pages/ErrorPage";
 
 
@@ -20,9 +21,14 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage/>
     },
     {
-        path: "/timeline",
-        element: <TimelinePage />,
-        errorElement: <ErrorPage/>
+        path: "auth",
+        element: <FormPage isRegistration={false}/>,
+        errorElement: <ErrorPage />,
+    },
+    {
+        path: "reg",
+        element: <FormPage isRegistration={true}/>,
+        errorElement: <ErrorPage />,
     },
 ])
 
