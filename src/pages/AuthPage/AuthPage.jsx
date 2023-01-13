@@ -5,13 +5,23 @@ import {useNavigate} from "react-router";
 // import Button from "../../components/Button/Button.js";
 import Button from "../../components/Button/Button";
 import axios from 'axios';
+import {useDispatch, useSelector} from "react-redux";
+import {login, registration} from "../../redux/userSlice.ts";
 
 const CREATE_USER_API_URL = 'http://localhost:1337/api/auth/local/register';
 const AUTH_USER_API_URL = 'http://localhost:1337/api/auth/local';
 
 const FormPage = (props) => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
+    const isAuth = useSelector((state) => state.user.isAuth);
+
+    useEffect(()=>{
+        if (isAuth) navigate('/')
+    })
 
     let url = (props.isRegistration ?  CREATE_USER_API_URL : AUTH_USER_API_URL)
 
@@ -27,35 +37,27 @@ const FormPage = (props) => {
 
     function handleSubmit (event) {
         event.preventDefault()
-        let body
-        body = (props.isRegistration ?
-         {
-            username: nickname,
-            email: email,
-            password: password,
-            fullName: nickname
-        } :
-        {
-            identifier: nickname,
-            password: password,
-        })
 
+        let body = {
+            email: 'email@email.email',
+            fullName: 'nickname',
+            password:'password',
+            username: 'nickname'
+        }
 
-        axios
-            .post(url, body)
-            .then(response => {
-                // Handle success.
-                console.log('Well done!');
-                console.log('User profile', response.data.user);
-                console.log('User token', response.data.jwt);
-            })
-            .then(() => {
-                navigate("/")
-            })
-            .catch(error => {
-                // Handle error.
-                console.log('An error occurred:', error.response);
-            });
+        if (!props.isRegistration) {
+            dispatch(login({
+                identifier: nickname,
+                password:password
+            }))
+        } else {
+            dispatch(registration({
+                email: email,
+                fullName: nickname,
+                password: password,
+                username: nickname
+            }))
+        }
     }
 
     const heading =  (props.isRegistration) ? 'Привет, новый пользователь' : 'Привет, зарегистрированный пользователь';

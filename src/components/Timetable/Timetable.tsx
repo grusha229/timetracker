@@ -55,7 +55,6 @@ export const Timetable:React.FC<Timetable> = ({workTimes,containerWidth }) => {
             minutes2 = dateParsed2.getMinutes()
             seconds2 = dateParsed2.getSeconds()
             dailyTimeEnd = dateParsed2.getTime() - seconds2 - minutes2*60 - hours2*3600
-            console.log(dailyTimeEnd,dailyTimeStart)
 
             current.push(
                 {

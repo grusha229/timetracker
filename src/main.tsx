@@ -7,7 +7,8 @@ import {
     Route,
 } from "react-router-dom"
 import {Provider} from "react-redux"
-import store from "./redux/store";
+// import store from "./redux/store";
+import store from "./redux/index";
 import TaskListPage from "./pages/TaskListPage";
 // @ts-ignore
 import FormPage from "./pages/AuthPage/AuthPage.jsx";
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage/>
     },
     {
-        path: "auth",
+        path: "login",
         element: <FormPage isRegistration={false}/>,
         errorElement: <ErrorPage />,
     },

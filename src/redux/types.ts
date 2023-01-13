@@ -1,5 +1,3 @@
-import type {reducer} from "./rootReducer";
-
 export type TaskId = string;
 
 export type TimePeriod = {
@@ -15,4 +13,3 @@ export type Task = {
     isInProgress: boolean;
 };
 
-export type State = ReturnType<typeof reducer>;

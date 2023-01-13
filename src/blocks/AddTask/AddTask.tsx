@@ -3,7 +3,7 @@ import Input from "../../components/Input/Input";
 import './AddTask.scss'
 import Button from "../../components/Button/Button";
 import {useDispatch} from "react-redux";
-import {createTask} from "../../redux/actions"
+import {createTask} from "../../redux/taskListSlice"
 // @ts-ignore
 import { v4 as createId } from "uuid";
 
@@ -27,7 +27,13 @@ export const AddTask = () => {
             return;
         }
         let time = new Date().toString()
-        dispatch(createTask(createId(),taskName,time));
+        let id = createId()
+        let data = {
+            id: id,
+            time: time,
+            taskName: taskName
+        }
+        dispatch(createTask(data));
         setTaskName('')
     }, [dispatch,taskName]);
 

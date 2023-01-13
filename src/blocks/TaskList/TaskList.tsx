@@ -1,12 +1,13 @@
 import React from 'react';
 import "./TaskList.scss"
 import {useSelector, useStore, connect} from "react-redux"
-import {taskListSelector} from "../../redux/selectors";
 import {State} from "../../redux/newTasks/taskListReducer";
 import TaskItem from "./Task/TaskItem";
-
+// todo – Разобраться с типизацией во всём файле
 const TaskList:React.FC<any> = () => {
-    const taskList = useSelector(taskListSelector)
+    // const taskList = useSelector(taskListSelector)
+    // @ts-ignore
+    const taskList = useSelector((state) => state.taskList);
 
     return (
         <>
@@ -36,11 +37,4 @@ const TaskList:React.FC<any> = () => {
     )
 }
 
-const mapStateToProps = (state: State) => {
-    console.log(state)
-    return {
-        arrayOfTasks: state
-    }
-}
-
-export default connect(mapStateToProps,null)(TaskList);
+export default TaskList;

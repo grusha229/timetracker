@@ -41,5 +41,3 @@ const actions = {
 export type Actions = {
     [Key in keyof typeof actions]: ReturnType<typeof actions[Key]>;
 } [keyof typeof actions]
-
-

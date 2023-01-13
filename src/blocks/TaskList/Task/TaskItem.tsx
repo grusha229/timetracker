@@ -4,7 +4,7 @@ import Button from "../../../components/Button/Button";
 import Timer from "../../../components/Timer/Timer";
 import {Task as TaskType, TimePeriod} from "../../../redux/types";
 import trashIcon from "../../../assets/svg/trash.svg"
-import {removeTask, stopNewTimePeriod, startNewTimePeriod} from "../../../redux/actions";
+import {removeTask, stopNewTimePeriod, startNewTimePeriod} from "../../../redux/taskListSlice";
 import {useDispatch} from "react-redux";
 import {Timetable} from "../../../components/Timetable/Timetable";
 
@@ -42,7 +42,7 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
 
     const deleteHandler = useCallback(() => {
         if (confirm('Вы действительно хотите удалить запись?')) {
-            return dispatch(removeTask(id));
+            return dispatch(removeTask({id}));
         }
     }, [dispatch]);
 
@@ -54,15 +54,14 @@ const TaskItem:React.FC<TaskType> = ({name, creationTime, id,isInProgress,workPe
     const handleTimer = useCallback(() => {
         setIsSecondsRun(!isSecondsRun)
         if (isSecondsRun) {
-            dispatch((stopNewTimePeriod(id)))
-        } else dispatch((startNewTimePeriod(id)));
+            dispatch(stopNewTimePeriod({id}))
+        } else dispatch(startNewTimePeriod({id}));
     }, [dispatch,isSecondsRun]);
 
 
     let creationDateParsed = new Date(creationTime)
     let hours = creationDateParsed.toLocaleTimeString()
     let day = creationDateParsed.toLocaleDateString()
-    console.log(workPeriods)
     // @ts-ignore
     return (
         <div className={'task'}>

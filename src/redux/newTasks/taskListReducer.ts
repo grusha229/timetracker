@@ -1,4 +1,4 @@
-import {Actions} from "./../actions";
+import {Actions} from "./actions";
 import {Task} from "../types";
 
 const initialState = {
@@ -62,8 +62,6 @@ export const taskListReducer = (state: State = initialState, action: Actions) =>
                     start: startTime,
                     end: null,
                 })
-
-                console.log(periods)
 
                 return {
                     ...state,
