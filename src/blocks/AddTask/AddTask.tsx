@@ -28,12 +28,13 @@ export const AddTask = () => {
         }
         let time = new Date().toString()
         let id = createId()
-        let data = {
-            id: id,
-            time: time,
-            taskName: taskName
-        }
-        dispatch(createTask(data));
+        // let data = {
+        //     id: id,
+        //     time: time,
+        //     taskName: taskName
+        // }
+        // @ts-ignore
+        dispatch(createTask(taskName));
         setTaskName('')
     }, [dispatch,taskName]);
 

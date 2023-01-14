@@ -67,7 +67,7 @@ interface userState {
 
 const initialState = {
     user: {},
-    isAuth: false ,
+    isAuth: false,
     error: false,
     status: ''
 } as userState
@@ -87,7 +87,8 @@ const userSlice = createSlice({
             state.error = action.payload
         },
         logout(state) {
-            state.isAuth = false
+            state.isAuth = false;
+            localStorage.removeItem('token');
         }
     }
 })

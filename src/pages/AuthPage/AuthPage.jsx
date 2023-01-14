@@ -21,7 +21,9 @@ const FormPage = (props) => {
     const error = useSelector((state) => state.user.error);
 
     useEffect(()=>{
-        if (isAuth) navigate('/')
+        if (isAuth) {
+            navigate('/')
+        }
     })
 
     let url = (props.isRegistration ?  CREATE_USER_API_URL : AUTH_USER_API_URL)

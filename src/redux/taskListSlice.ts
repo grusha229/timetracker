@@ -1,36 +1,51 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {Task} from "./types";
-import { current } from '@reduxjs/toolkit'
-//
-// export const stopNewTimePeriod  = createAsyncThunk(
-//     'tast/stopNewTimePeriod',
-//     async function (id) {
-//         const response = await fetch('http://localhost:3003/Messages');
-//
-//         const data = await response.json();
-//
-//         // @ts-ignore
-//         return data[id]
-//     }
-// );
+import {registrationRequest} from "../models/request/AuthRequest";
+import AuthService from "../service/AuthService";
+import {setAuth, setError, setUser} from "./userSlice";
+import TaskListService from "../service/TaskListService";
+import {ITask} from "../models/ITask";
 
-// stopNewTimePeriod(state, action) {
-//     let endTime = new Date().getTime()
-//     let period = state[action.payload.id].workPeriods
-//
-//     period[period.length - 1] = {
-//         ...period[period.length - 1],
-//         end: endTime,
-//     }
-//     return {
-//         ...state,
-//         [action.payload.id]: {
-//             ...state[action.payload.id],
-//             isInProgress: false,
-//             workPeriods: period
-//         }
-//     };
-// }
+
+export const getTaskList  = createAsyncThunk(
+    'tasklist/getTaskList',
+    async function (_,{dispatch}) {
+        // console.log(arg)
+        try {
+            const response = await TaskListService.getTasks()
+                .catch((e:any) => {
+                    dispatch(setError(e.message))
+                })
+            //@ts-ignore
+            if (response.data.data) {
+                //@ts-ignore
+                (response.data.data).map((el: ITask) => {
+                    dispatch(addTask(el))
+                })
+            }
+
+        } catch (e: any) {
+            dispatch(setError(e.response.data.error.message));
+        }
+    }
+);
+
+export const createTask  = createAsyncThunk(
+    'tasklist/createTask',
+    async function (name:string,{dispatch}) {
+        // console.log(arg)
+        try {
+            const response = await TaskListService.createTask(name)
+                .catch((e:any) => {
+                    dispatch(setError(e.message))
+                })
+            //@ts-ignore
+            dispatch(addTask(response.data.data))
+        } catch (e: any) {
+            dispatch(setError(e.response.data.error.message));
+        }
+    }
+);
 
 // @ts-ignore
 const taskListSlice = createSlice({
@@ -63,13 +78,13 @@ const taskListSlice = createSlice({
     // } as Record<string, Task>,
     } as Record<string, Task>,
     reducers: {
-        createTask(state, action) {
+        addTask(state, action) {
             return {
                 ...state,
                 [action.payload.id]: {
                     id: action.payload.id,
-                    name: action.payload.taskName,
-                    creationTime: action.payload.time,
+                    name: action.payload.attributes.name,
+                    creationTime: action.payload.attributes.createdAt,
                     isInProgress: false,
                     workPeriods: []
                 }
@@ -115,6 +130,6 @@ const taskListSlice = createSlice({
     // }
 })
 
-export const {createTask,removeTask,startNewTimePeriod,stopNewTimePeriod} = taskListSlice.actions;
+export const {removeTask,startNewTimePeriod,stopNewTimePeriod,addTask} = taskListSlice.actions;
 
 export default taskListSlice.reducer

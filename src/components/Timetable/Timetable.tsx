@@ -93,7 +93,7 @@ export const Timetable:React.FC<Timetable> = ({workTimes,containerWidth }) => {
                 {
                     allHours.map((_el,index) => {
                         return (
-                            <div className={'hour'}>
+                            <div className={'hour'} key={index}>
                                 <div>{index.toString().padStart(2,'0')}</div>
                             </div>
                         )
