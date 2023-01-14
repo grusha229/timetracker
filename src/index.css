@@ -70,3 +70,13 @@ button:focus-visible {
 p{
   margin: 0;
 }
+
+a {
+  cursor: pointer;
+  color: #ffdd2d;
+}
+
+a:hover {
+  cursor: pointer;
+  color: #fcc521;
+}

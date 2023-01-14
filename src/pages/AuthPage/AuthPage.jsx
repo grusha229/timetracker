@@ -18,6 +18,7 @@ const FormPage = (props) => {
     const dispatch = useDispatch();
 
     const isAuth = useSelector((state) => state.user.isAuth);
+    const error = useSelector((state) => state.user.error);
 
     useEffect(()=>{
         if (isAuth) navigate('/')
@@ -25,10 +26,10 @@ const FormPage = (props) => {
 
     let url = (props.isRegistration ?  CREATE_USER_API_URL : AUTH_USER_API_URL)
 
-    const [nickname, setNickname] = useState('')
+    const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
-    const [error, setError] = useState(false)
+    // const [error, setError] = useState(false)
 
     function handleChange (setFunction,event) {
         event.preventDefault()
@@ -38,45 +39,39 @@ const FormPage = (props) => {
     function handleSubmit (event) {
         event.preventDefault()
 
-        let body = {
-            email: 'email@email.email',
-            fullName: 'nickname',
-            password:'password',
-            username: 'nickname'
-        }
-
         if (!props.isRegistration) {
             dispatch(login({
-                identifier: nickname,
+                identifier: email,
                 password:password
             }))
         } else {
             dispatch(registration({
                 email: email,
-                fullName: nickname,
+                fullName: name,
                 password: password,
-                username: nickname
+                username: email
             }))
         }
     }
 
-    const heading =  (props.isRegistration) ? 'Привет, новый пользователь' : 'Привет, зарегистрированный пользователь';
+    const heading =  (props.isRegistration) ? 'Sign in' : 'Log in';
     return (
         <>
             <div className={s.main} id="welcome">
                 <h1 className={s.heading}>{heading}</h1>
                     <form id="welcome-form" onSubmit={handleSubmit}>
+
                         <input
-                            placeholder="Nickname"
-                            type="text"
-                            onChange={(e) => handleChange(setNickname,e)}
+                            placeholder="Your email"
+                            type="email"
+                            onChange={(e) => handleChange(setEmail,e)}
                         />
 
                         {props.isRegistration && (
                             <input
-                                placeholder="Your email"
-                                type="email"
-                                onChange={(e) => handleChange(setEmail,e)}
+                                placeholder="Your name"
+                                type="text"
+                                onChange={(e) => handleChange(setName,e)}
                             />
                         )}
 
@@ -86,11 +81,20 @@ const FormPage = (props) => {
                             onChange={(e) => handleChange(setPassword,e)}
                         />
                         <div className={`${s.alert} ${ !error ? s.disabled : ''}`}>
-                            <p> Упс! Что-то пошло не так </p>
+                            <p> There is an error: </p>
+                            <p> {error} </p>
                         </div>
                         <Button>
                             {props.isRegistration ? "Sign in" : "Log in" }
                         </Button>
+                        <div className={s.additional}>
+                        {props.isRegistration && (
+                            <> Already have an account? <a onClick={()=>{navigate('/login')}}> Log in </a> </>
+                        )}
+                        {!props.isRegistration && (
+                            <> Have not got an account? <a onClick={()=>{navigate('/reg')}}> Sign in </a> </>
+                        )}
+                        </div>
                     </form>
                 </div>
         </>

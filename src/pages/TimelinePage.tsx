@@ -19,7 +19,7 @@ const Content:React.FC<any> = () => {
 
     return (
         <>
-            <Header userName={'UserName'} />
+            <Header />
             <div className={`layout`}>
                 <div className={'container'}>
                     <div className={'content'}>

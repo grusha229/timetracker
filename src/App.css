@@ -8,3 +8,8 @@
     margin-top: 35px;
     display: block;
 }
+
+a {
+    cursor: pointer;
+    color: #fcc521;
+}

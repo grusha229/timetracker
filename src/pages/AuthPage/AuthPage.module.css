@@ -37,3 +37,9 @@ form input {
     display: none;
     margin: 0 0 15px;
 }
+
+.additional {
+    text-align: center;
+    margin-top: 10px;
+}
+

@@ -9,8 +9,8 @@ function App() {
 
   return (
       <>
-        <Header userName={'UserName'} />
-        <Content />
+        <Header/>
+        <Content/>
       </>
   )
 }
