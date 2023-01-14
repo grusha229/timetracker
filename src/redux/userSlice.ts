@@ -16,10 +16,15 @@ export const login  = createAsyncThunk(
                     dispatch(setError(e.message))
                 })
                 .then(() => {
-                    localStorage.setItem('token', response.data.jwt);
-                    dispatch(setAuth(true));
-                    dispatch(setUser(response.data.user))
-                    dispatch(setError(null))
+                    //@ts-ignore
+                    if (response.data) {
+                        //@ts-ignore
+                        localStorage.setItem('token', response.data.jwt);
+                        dispatch(setAuth(true));
+                        //@ts-ignore
+                        dispatch(setUser(response.data.user))
+                        dispatch(setError(null))
+                    }
                 })
 
         } catch (e:any) {
@@ -39,10 +44,15 @@ export const registration  = createAsyncThunk(
                     dispatch(setError(e.message))
                 })
                 .then(() => {
-                    localStorage.setItem('token', response.data.jwt);
-                    dispatch(setAuth(true));
-                    dispatch(setUser(response.data.user))
-                    dispatch(setError(null))
+                    //@ts-ignore
+                    if (response.data) {
+                        //@ts-ignore
+                        localStorage.setItem('token', response.data.jwt);
+                        dispatch(setAuth(true));
+                        //@ts-ignore
+                        dispatch(setUser(response.data.user))
+                        dispatch(setError(null))
+                    }
                 })
         } catch (e: any) {
             dispatch(setError(e.response.data.error.message));
