@@ -14,11 +14,14 @@ export const login  = createAsyncThunk(
             const response = await AuthService.login(arg.identifier, arg.password)
                 .catch((e:any) => {
                     dispatch(setError(e.message))
-                });
-            localStorage.setItem('token', response.data.jwt)
-            dispatch(setAuth(true));
-            dispatch(setUser(response.data.user))
-            dispatch(setError(null))
+                })
+                .then(() => {
+                    localStorage.setItem('token', response.data.jwt);
+                    dispatch(setAuth(true));
+                    dispatch(setUser(response.data.user))
+                    dispatch(setError(null))
+                })
+
         } catch (e:any) {
             dispatch(setError(e.response.data.error.message))
             console.log(e);
@@ -34,11 +37,13 @@ export const registration  = createAsyncThunk(
             const response = await AuthService.registration(arg.email, arg.fullName, arg.password, arg.username)
                 .catch((e:any) => {
                     dispatch(setError(e.message))
-                });
-            localStorage.setItem('token', response.data.jwt)
-            dispatch(setUser(response.data.user));
-            response.data.user && dispatch(setAuth(true));
-            dispatch(setError(null))
+                })
+                .then(() => {
+                    localStorage.setItem('token', response.data.jwt);
+                    dispatch(setAuth(true));
+                    dispatch(setUser(response.data.user))
+                    dispatch(setError(null))
+                })
         } catch (e: any) {
             dispatch(setError(e.response.data.error.message));
         }
