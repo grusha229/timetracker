@@ -1,11 +1,8 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {Task} from "./types";
-import { current } from '@reduxjs/toolkit'
 import {IUser} from "../models/IUser";
 import {loginRequest, registrationRequest} from "../models/request/AuthRequest";
 import AuthService from "../service/AuthService";
-import {useNavigate} from "react-router";
-import {json} from "react-router-dom";
+
 
 export const login  = createAsyncThunk(
     'user/login',
@@ -43,31 +40,20 @@ export const registration  = createAsyncThunk(
                 .catch((e:any) => {
                     dispatch(setError(e.message))
                 })
-                .then(() => {
-                    //@ts-ignore
-                    if (response.data) {
+                // .then((response) => {
+                //     //@ts-ignore
+                //     if (response.data) {
                         //@ts-ignore
                         localStorage.setItem('token', response.data.jwt);
                         dispatch(setAuth(true));
                         //@ts-ignore
                         dispatch(setUser(response.data.user))
                         dispatch(setError(null))
-                    }
-                })
+                    // }
+                // })
         } catch (e: any) {
             dispatch(setError(e.response.data.error.message));
         }
-    }
-);
-
-export const logout  = createAsyncThunk(
-    'user/logout',
-    function (_,{dispatch}) {
-        const navigate = useNavigate()
-
-        localStorage.removeItem('token')
-        dispatch(setAuth(false));
-        navigate('/login')
     }
 );
 
@@ -100,21 +86,12 @@ const userSlice = createSlice({
         setError(state, action) {
             state.error = action.payload
         },
-    },
-    // extraReducers: (builder,) => {
-    //     builder.addCase(login.pending, (state:userState) => {
-    //         setError(false)
-    //     });
-    //     builder.addCase(login.rejected, (state:userState) => {
-    //         setError(true);
-    //         state.error = true
-    //     });
-    //     builder.addCase(login.fulfilled, (state:userState) => {
-    //         state.error = false;
-    //     });
-    // }
+        logout(state) {
+            state.isAuth = false
+        }
+    }
 })
 
-export const {setAuth,setUser,setError} = userSlice.actions;
+export const {setAuth,setUser,setError,logout} = userSlice.actions;
 
 export default userSlice.reducer

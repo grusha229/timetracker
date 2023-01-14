@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import "./Header.scss"
 import Button from "../../components/Button/Button";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../redux/userSlice";
 
 
@@ -10,6 +10,12 @@ interface iHeaderProps {
 }
 
 const Header:React.FC = ({}) => {
+
+    const dispatch = useDispatch()
+
+    const handleLogout = useCallback(() => {
+        dispatch(logout())
+    },[dispatch])
 
     // @ts-ignore
     const userName = useSelector((state) => state.user.user.fullName);
@@ -22,7 +28,7 @@ const Header:React.FC = ({}) => {
                         {userName}
                     </div>
                     <div className={`logout`}>
-                        <Button onClick={logout}>
+                        <Button onClick={handleLogout}>
                             Выйти
                         </Button>
                     </div>

@@ -14,7 +14,7 @@ const TaskListPage:React.FC<any> = () => {
 
     useEffect(()=>{
         if (!isAuth) navigate('/login')
-    })
+    },[isAuth])
 
     return (
         <>
