@@ -14,6 +14,7 @@ const Header:React.FC = ({}) => {
     const dispatch = useDispatch()
 
     const handleLogout = useCallback(() => {
+        localStorage.removeItem('token');
         dispatch(logout())
     },[dispatch])
 

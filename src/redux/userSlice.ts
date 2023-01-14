@@ -12,17 +12,17 @@ export const login  = createAsyncThunk(
                 .catch((e:any) => {
                     dispatch(setError(e.message))
                 })
-                .then(() => {
-                    //@ts-ignore
-                    if (response.data) {
+                // .then(() => {
+                //     //@ts-ignore
+                //     if (response.data) {
                         //@ts-ignore
                         localStorage.setItem('token', response.data.jwt);
                         dispatch(setAuth(true));
                         //@ts-ignore
                         dispatch(setUser(response.data.user))
                         dispatch(setError(null))
-                    }
-                })
+                    // }
+                // })
 
         } catch (e:any) {
             dispatch(setError(e.response.data.error.message))
